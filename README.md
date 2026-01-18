@@ -52,7 +52,7 @@ exiftool -csv \
 
 2. Make a few file duplicates with `_DUP.JPG` appended.
 
-3. Make a few file copies and rename with `_GIMBAL_UP.JPG` appended, then set their gimbal pitch and degree to point upwards (simulating simulates accidental gimbal movement during transitions):
+3. Make a few file copies and rename with `_GIMBAL_UP.JPG` appended, then set their gimbal pitch and degree to point upwards (simulating accidental gimbal movement during transitions):
 
 ```bash
 exiftool -overwrite_original \
@@ -61,7 +61,7 @@ exiftool -overwrite_original \
   *_GIMBAL_UP.JPG
 ```
 
-4. Make a few file copies and rename with `_GIMBAL_HORIZON` appended, then set their gimbal angle to 0 (horizon shot):
+4. Make a few file copies and rename with `_GIMBAL_HORIZON.JPG` appended, then set their gimbal angle to 0 (horizon shot):
 
 ```bash
 exiftool -overwrite_original \
@@ -92,7 +92,18 @@ exiftool -overwrite_original \
   *_INVALID_COORD.JPG
 ```
 
-7. Make a few file copies and change to an entirely black image via min brightness, min exposure, max contrast, re-apply the EXIF, then tweak the coord slightly:
+7. Make a few file copies and rename with `_MISSING_COORDS.JPG` appended, then apply empty location info:
+
+```bash
+exiftool -overwrite_original \
+  -GPSLatitude= \
+  -GPSLatitudeRef= \
+  -GPSLongitude= \
+  -GPSLongitudeRef= \
+  *_MISSING_COORDS.JPG
+```
+
+8. Make a few file copies and change to an entirely black image via min brightness, min exposure, max contrast, re-apply the EXIF, then tweak the coord slightly:
 
 ```bash
 exiftool -overwrite_original \
@@ -110,7 +121,7 @@ exiftool -overwrite_original \
   FILENAME_LENS_CAP.JPG
 ```
 
-8. Make a few file copies and change sharpness / blur, re-apply the EXIF, then tweak the coord slightly:
+9. Make a few file copies and change sharpness / blur, re-apply the EXIF, then tweak the coord slightly:
 
 ```bash
 exiftool -overwrite_original \
@@ -127,15 +138,33 @@ exiftool -overwrite_original \
   -GPSLongitudeRef=E \
   FILENAME_POOR_SHARPNESS.JPG
 ```
+
+10. Make a few file copies and rename with `_MISSING_GIMBAL.JPG` appended, then remove gimbal angle metadata entirely (should be marked invalid downstream):
+
+```bash
+exiftool -overwrite_original \
+  -GimbalPitchDegree= \
+  -CameraPitch= \
+  *_MISSING_GIMBAL.JPG
+```
+
+> [!NOTE]
+> Errors like  
+> `Warning: [minor] Possibly incorrect maker notes offsets (fix by -456?) - DJI_20251027143608_0008_D_LENS_CAP.JPG`  
+> are absolutely fine. They reference proprietary MakerNotes, which we don't need.
 
 ### Uploading To S3
 
 ```bash
-rclone sync --verbose ./image dronetm-testdata:dronetm-testdata/agung-2
+docker run --rm -it --entrypoint=sh -v "/home/YOURUSER/rclone.conf:/config/rclone/rclone.conf" -v "$(pwd)/images:/images" rclone/rclone:latest
+
+rclone sync --verbose /images dronetm-testdata:dronetm-testdata/agung-2
 ```
 
 ### Downloading From S3
 
 ```bash
-rclone sync --verbose dronetm-testdata:dronetm-testdata/agung-2 ./image
+docker run --rm -it --entrypoint=sh -v "/home/YOURUSER/rclone.conf:/config/rclone/rclone.conf" -v "$(pwd)/images:/images" rclone/rclone:latest
+
+rclone sync --verbose dronetm-testdata:dronetm-testdata/agung-2 /images
 ```
