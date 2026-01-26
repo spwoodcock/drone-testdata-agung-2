@@ -25,6 +25,7 @@ DroneTM project:
   first removing these files (i.e. by passing into DroneTM).
 - Some have invalid EXIF, others blurry photos, or are simply black (indicating lens cap left on).
 - These files are denoted by `_ISSUE_WITH_FILE.JPG`.
+- The files are separated into the directory `images/issues`.
 
 All imagery is licensed as CC-BY-4.0.
 
@@ -142,10 +143,14 @@ exiftool -overwrite_original \
 10. Make a few file copies and rename with `_MISSING_GIMBAL.JPG` appended, then remove gimbal angle metadata entirely (should be marked invalid downstream):
 
 ```bash
-exiftool -overwrite_original \
-  -GimbalPitchDegree= \
-  -CameraPitch= \
-  *_MISSING_GIMBAL.JPG
+# This does not work, as the EXIF is permanently encoded
+# exiftool -overwrite_original \
+#   -GimbalPitchDegree= \
+#   -CameraPitch= \
+#   *_MISSING_GIMBAL.JPG
+
+# Instead make a file copy and save in your OS photo browser
+# This will likely erase the EXIF - double check with exiftool
 ```
 
 > [!NOTE]
