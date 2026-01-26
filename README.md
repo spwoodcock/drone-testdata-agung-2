@@ -37,7 +37,7 @@ DroneTM project:
 
 ## Example Image
 
-![example](./drone-testdata-agung-1-example.jpg)
+![example](./drone-testdata-agung-2-example.jpg)
 
 All imagery is licensed as CC-BY-4.0.
 
