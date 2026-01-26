@@ -1,10 +1,16 @@
 # Drone Test Data Mt Agung 2
 
+![aoi-zoomout](./drone-testdata-agung-2-aoi-zoomout.jpg)
+
+![aoi](./drone-testdata-agung-2-aoi.jpg)
+
+View the AOI on a map [here](./aoi.geojson).
+
 ## Contents
 
 - Images of Mt Agung, Bali, Indonesia.
   - Images are from adjacent tasks, allowing for processing in ODM.
-  - As they are too large to store in Git, a link to a Google drive is provided.
+  - As they are too large to store in Git, a link to S3 is provided instead.
 - A GeoJSON AOI of the area.
 - QGIS project to load and visually inspect.
 - Images geopackage, to display inside QGIS easily.
@@ -28,6 +34,10 @@ DroneTM project:
 - Some have invalid EXIF, others blurry photos, or are simply black (indicating lens cap left on).
 - These files are denoted by `_ISSUE_WITH_FILE.JPG`.
 - The files are separated into the directory `images/issues`.
+
+## Example Image
+
+![example](./drone-testdata-agung-1-example.jpg)
 
 All imagery is licensed as CC-BY-4.0.
 
