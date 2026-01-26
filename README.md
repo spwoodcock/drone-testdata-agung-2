@@ -10,6 +10,8 @@
 - Images geopackage, to display inside QGIS easily.
 - Image metadata CSV extracted via `exiftool`.
 
+View the AOI on a map [here](./aoi.geojson).
+
 ## Imagery Source
 
 DroneTM project:
